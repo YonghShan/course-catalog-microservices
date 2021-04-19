@@ -1,6 +1,9 @@
 package com.yonghshan.services.newcourseapp;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigInteger;
@@ -12,14 +15,22 @@ import java.util.List;
  */
 
 @RestController
+@RefreshScope
 public class CourseController {
 
     @Autowired
     private CourseRepository courseRepository;
 
+    @Value("${organization.name}")
+    private String organizationName;
+
+    @Value("${service.welcome.message}")
+    private String serviceMessage;
+
     @RequestMapping("/")
     public String getCourseAppHome() {
-        return ("Course App Home");
+        //return ("Course App Home");
+        return (organizationName + "***" + serviceMessage);
     }
 
     @RequestMapping("/courses")

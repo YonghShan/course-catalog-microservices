@@ -23,7 +23,7 @@ public class CatalogController {
     public String getCatalogHome() {
         String courseAppMessage = "";
         //String courseAppURL = "http://localhost:8080/";
-        InstanceInfo instanceInfo = client.getNextServerFromEureka("yhs-course-app", false);
+        InstanceInfo instanceInfo = client.getNextServerFromEureka("newcourse-service", false);
         String courseAppURL = instanceInfo.getHomePageUrl();
         RestTemplate restTemplate = new RestTemplate();
         courseAppMessage = restTemplate.getForObject(courseAppURL, String.class);
@@ -39,7 +39,7 @@ public class CatalogController {
     public String getCatalog() {
         String courses = "";
         //String courseAppURL = "http://localhost:8080/courses";
-        InstanceInfo instanceInfo = client.getNextServerFromEureka("yhs-course-app", false);
+        InstanceInfo instanceInfo = client.getNextServerFromEureka("newcourse-service", false);
         String courseAppURL = instanceInfo.getHomePageUrl();
         courseAppURL = courseAppURL + "/courses"; // 因为上面Hardcoding的URL比起HomePageUrl（localhost:8080）多了一个"/courses"
         RestTemplate restTemplate = new RestTemplate();
@@ -53,13 +53,13 @@ public class CatalogController {
         Course course = new Course();
         User user = new User();
         //String courseAppURL = "http://localhost:8080/1";
-        InstanceInfo instanceInfo = client.getNextServerFromEureka("yhs-course-app", false);
+        InstanceInfo instanceInfo = client.getNextServerFromEureka("newcourse-service", false);
         String courseAppURL = instanceInfo.getHomePageUrl();
         courseAppURL = courseAppURL + "/1"; // 因为上面Hardcoding的URL比起HomePageUrl（localhost:8080）多了一个"/1"
         RestTemplate restTemplate = new RestTemplate();
         course = restTemplate.getForObject(courseAppURL, Course.class);
 
-        instanceInfo = client.getNextServerFromEureka("yhs-user-service", false);
+        instanceInfo = client.getNextServerFromEureka("newuser-service", false);
         String userAppURL = instanceInfo.getHomePageUrl();
         userAppURL = userAppURL + "/" + course.getCourseid();
         String usersList = restTemplate.getForObject(userAppURL, String.class);
